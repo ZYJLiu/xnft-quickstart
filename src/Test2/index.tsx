@@ -17,9 +17,7 @@ import ReactXnft, {
   Stack,
   Tab,
 } from "react-xnft"
-import { Test } from "./Test"
-import { Test2 } from "./Test2"
-import { THEME } from "./utils/theme"
+import { THEME } from "../utils/theme"
 //
 // On connection to the host environment, warm the cache.
 //
@@ -27,7 +25,7 @@ ReactXnft.events.on("connect", () => {
   // no-op
 })
 
-export function App() {
+export function Test2() {
   const publicKey = usePublicKey()
   const connection = new Connection("https://api.devnet.solana.com/")
   const [balance, setBalance] = useState(0)
@@ -57,34 +55,37 @@ export function App() {
   }, [publicKey])
 
   return (
-    <View style={{ height: "100%", backgroundColor: "#111827" }}>
-      <Tab.Navigator
-        options={({ route }) => {
-          return {
-            tabBarIcon: ({ focused }) => {
-              const color = focused
-                ? THEME.colors.activeTab
-                : THEME.colors.inactiveTab
-              if (route.name === "test") {
-                return <Text>Tab One</Text>
-              } else {
-                return <Text>Tab Two</Text>
-              }
-            },
-          }
+    <View
+      style={{
+        textAlign: "center",
+        color: THEME.colors.text,
+      }}
+    >
+      <Text
+        style={{
+          textAlign: "center",
+          color: THEME.colors.text,
+          fontSize: "20px",
+          fontWeight: 400,
+          lineHeight: "150%",
+          margin: "12px",
         }}
       >
-        <Tab.Screen
-          name="test"
-          disableLabel={true}
-          component={() => <Test />}
-        />
-        <Tab.Screen
-          name="test2"
-          disableLabel={true}
-          component={() => <Test2 />}
-        />
-      </Tab.Navigator>
+        Tab Two
+      </Text>
+      <Text
+        style={{
+          textAlign: "center",
+          color: THEME.colors.text,
+          fontSize: "15px",
+          fontWeight: 100,
+          lineHeight: "150%",
+          margin: "12px",
+        }}
+      >
+        Balance is {balance}
+      </Text>
+      <Button onClick={() => airdrop()}>Airdrop</Button>
     </View>
   )
 }
