@@ -25,7 +25,7 @@ ReactXnft.events.on("connect", () => {
   // no-op
 })
 
-export function Test2() {
+export function Test3() {
   const publicKey = usePublicKey()
   const connection = new Connection("https://api.devnet.solana.com/")
   const [balance, setBalance] = useState(0)

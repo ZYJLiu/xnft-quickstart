@@ -26,34 +26,6 @@ ReactXnft.events.on("connect", () => {
 })
 
 export function Test() {
-  const publicKey = usePublicKey()
-  const connection = new Connection("https://api.devnet.solana.com/")
-  const [balance, setBalance] = useState(0)
-
-  const getBalance = useCallback(async () => {
-    const balance = await connection.getBalance(publicKey, "confirmed")
-    setBalance(parseFloat((balance / LAMPORTS_PER_SOL).toFixed(2)))
-    console.log("test")
-  }, [publicKey, balance])
-
-  const airdrop = useCallback(async () => {
-    console.log("test")
-    const signature = await connection.requestAirdrop(
-      publicKey,
-      LAMPORTS_PER_SOL
-    )
-    await connection.confirmTransaction(signature, "confirmed")
-
-    getBalance()
-  }, [publicKey])
-
-  useEffect(() => {
-    if (publicKey) {
-      console.log("useStakeAccounts : publicKey", publicKey.toString())
-    }
-    getBalance()
-  }, [publicKey])
-
   return (
     <View
       style={{
@@ -61,32 +33,141 @@ export function Test() {
         color: THEME.colors.text,
       }}
     >
-      <Text
+      <View
         style={{
-          textAlign: "center",
-          color: THEME.colors.text,
-          fontSize: "20px",
-          fontWeight: 400,
-          lineHeight: "150%",
-          margin: "12px",
+          background: THEME.colors.backgroundGradient,
+          position: "fixed",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: "460px",
         }}
-      >
-        Tab One
-      </Text>
+      ></View>
+      <View style={{ height: "10%" }}>
+        <Text>Top</Text>
+        {/* <Header></Header> */}
+        <Stack.Navigator
+          initialRoute={{ name: "test" }}
+          options={({ route }) => {
+            switch (route.name) {
+              case "test":
+                return {
+                  title: "Test",
+                }
+              case "test3":
+                return { title: "Test 2" }
+              case "test":
+                return { title: "Test 3" }
+              default:
+                throw new Error("unknown route")
+            }
+          }}
+          style={{}}
+        >
+          <Stack.Screen
+            name={"test"}
+            component={(props: any) => <Test2 {...props} />}
+          />
+        </Stack.Navigator>
+      </View>
+    </View>
+  )
+}
 
-      <Text
+function Test2() {
+  const publicKey = usePublicKey()
+  const [balance, setBalance] = useState(0)
+  const connection = new Connection("https://api.devnet.solana.com/")
+  const getBalance = useCallback(async () => {
+    const balance = await connection.getBalance(publicKey, "confirmed")
+    setBalance(parseFloat((balance / LAMPORTS_PER_SOL).toFixed(2)))
+    console.log("test")
+  }, [publicKey, balance])
+
+  // const estimatedRewards = useEstimatedRewards()
+  return (
+    <View>
+      <Text>SHOW</Text>
+      <View>
+        <Header balance={balance} />
+        <Text>Test2</Text>
+      </View>
+    </View>
+  )
+}
+
+function Header({ balance }: any) {
+  const onClick = () => {
+    console.log("test button")
+  }
+  return (
+    <View
+      style={{
+        marginTop: "255px",
+      }}
+    >
+      <View>
+        <Text
+          style={{
+            textAlign: "center",
+            color: THEME.colors.text,
+            fontSize: "20px",
+            fontWeight: 400,
+            lineHeight: "150%",
+          }}
+        >
+          {balance}
+        </Text>
+        <Text
+          style={{
+            fontSize: "40px",
+            marginTop: "12px",
+            textAlign: "center",
+            fontWeight: 500,
+            lineHeight: "24px",
+            color: THEME.colors.text,
+          }}
+        >
+          {balance}
+        </Text>
+        <Text
+          style={{
+            marginTop: "12px",
+            color: THEME.colors.textSecondary,
+            textAlign: "center",
+          }}
+        >
+          Also Text
+        </Text>
+      </View>
+      <View
         style={{
-          textAlign: "center",
-          color: THEME.colors.text,
-          fontSize: "15px",
-          fontWeight: 100,
-          lineHeight: "150%",
-          margin: "12px",
+          marginTop: "20px",
+          width: "268px",
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
       >
-        Balance is {balance}
-      </Text>
-      <Button onClick={() => airdrop()}>Airdrop</Button>
+        <Button
+          onClick={onClick}
+          style={{
+            flex: 1,
+            background: "#FFEFEB",
+            color: "#6100FF",
+            border: "1px solid #000000",
+            boxShadow: "4px 3px 0px #6100FF",
+            borderRadius: "8px",
+            width: "192px",
+            height: "40px",
+            fontWeight: 500,
+          }}
+        >
+          Button
+        </Button>
+      </View>
     </View>
   )
 }

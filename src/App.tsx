@@ -67,8 +67,10 @@ export function App() {
                 : THEME.colors.inactiveTab
               if (route.name === "test") {
                 return <Text>Tab One</Text>
-              } else {
+              } else if (route.name === "test2") {
                 return <Text>Tab Two</Text>
+              } else {
+                return <Text>Tab Three</Text>
               }
             },
           }
@@ -81,6 +83,11 @@ export function App() {
         />
         <Tab.Screen
           name="test2"
+          disableLabel={true}
+          component={() => <Test2 />}
+        />
+        <Tab.Screen
+          name="test3"
           disableLabel={true}
           component={() => <Test2 />}
         />
