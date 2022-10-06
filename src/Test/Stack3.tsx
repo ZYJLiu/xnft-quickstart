@@ -28,10 +28,12 @@ ReactXnft.events.on("connect", () => {
 
 export function Stack3() {
   console.log("test")
+  const nav = useNavigation()
+  const click = () => {
+    console.log("click")
+    nav.push("stack1")
+  }
   return (
-    // <View>
-    //   <Text>Test</Text>
-    // </View>
     <View>
       <Test />
     </View>
@@ -46,87 +48,30 @@ function Test() {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        textAlign: "center",
+        color: THEME.colors.text,
+      }}
+    >
       <Text>Stack 3</Text>
-      <Button onClick={() => click()}>Test</Button>
+      <Button
+        style={{
+          flex: 1,
+          background: "#FFEFEB",
+          color: "#6100FF",
+          border: "1px solid #000000",
+          boxShadow: "4px 3px 0px #6100FF",
+          borderRadius: "8px",
+          width: "40px",
+          height: "40px",
+          fontWeight: 500,
+          margin: "10px",
+        }}
+        onClick={() => click()}
+      >
+        Test
+      </Button>
     </View>
   )
 }
-
-// export function Stack1() {
-//   const nav = useNavigation()
-//   const publicKey = usePublicKey()
-//   const connection = new Connection("https://api.devnet.solana.com/")
-//   const [balance, setBalance] = useState(0)
-
-//   const getBalance = useCallback(async () => {
-//     const balance = await connection.getBalance(publicKey, "confirmed")
-//     setBalance(parseFloat((balance / LAMPORTS_PER_SOL).toFixed(2)))
-//     console.log("test")
-//   }, [publicKey, balance])
-
-//   const airdrop = useCallback(async () => {
-//     console.log("test")
-//     const signature = await connection.requestAirdrop(
-//       publicKey,
-//       2 * LAMPORTS_PER_SOL
-//     )
-//     await connection.confirmTransaction(signature, "confirmed")
-
-//     getBalance()
-//   }, [publicKey])
-
-//   useEffect(() => {
-//     if (publicKey) {
-//       console.log("useStakeAccounts : publicKey", publicKey.toString())
-//     }
-//     getBalance()
-//   }, [publicKey])
-
-//   return (
-//     <View
-//       style={{
-//         textAlign: "center",
-//         color: THEME.colors.text,
-//       }}
-//     >
-//       <Text
-//         style={{
-//           textAlign: "center",
-//           color: THEME.colors.text,
-//           fontSize: "20px",
-//           fontWeight: 400,
-//           lineHeight: "150%",
-//           margin: "12px",
-//         }}
-//       >
-//         Tab Two
-//       </Text>
-//       <Text
-//         style={{
-//           textAlign: "center",
-//           color: THEME.colors.text,
-//           fontSize: "15px",
-//           fontWeight: 100,
-//           lineHeight: "150%",
-//           margin: "12px",
-//         }}
-//       >
-//         Balance is {balance}
-//       </Text>
-//       <Button
-//         style={{
-//           textAlign: "center",
-//           color: "black",
-//           fontSize: "15px",
-//           fontWeight: 100,
-//           lineHeight: "150%",
-//           margin: "12px",
-//         }}
-//         onClick={() => airdrop()}
-//       >
-//         Airdrop
-//       </Button>
-//     </View>
-//   )
-// }

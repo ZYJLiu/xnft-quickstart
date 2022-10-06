@@ -17,8 +17,15 @@ import ReactXnft, {
   Stack,
   Tab,
   useNavigation,
+  TextField,
+  Image,
+  List,
+  ListItem,
+  ScrollBar,
+  LocalStorage,
 } from "react-xnft"
 import { THEME } from "../utils/theme"
+
 //
 // On connection to the host environment, warm the cache.
 //
@@ -29,9 +36,6 @@ ReactXnft.events.on("connect", () => {
 export function Stack1() {
   console.log("test")
   return (
-    // <View>
-    //   <Text>Test</Text>
-    // </View>
     <View>
       <Test />
     </View>
@@ -43,90 +47,74 @@ function Test() {
   const click = () => {
     console.log("click")
     nav.push("stack2")
+    test()
+  }
+
+  const test = async () => {
+    const value = await LocalStorage.get("key")
+    console.log("test", value)
   }
 
   return (
-    <View>
+    <View
+      style={{
+        textAlign: "center",
+        color: THEME.colors.text,
+      }}
+    >
       <Text>Stack 1</Text>
-      <Button onClick={() => click()}>Test</Button>
+
+      <Button
+        style={{
+          textAlign: "center",
+          color: "black",
+          fontSize: "15px",
+          fontWeight: 100,
+          lineHeight: "150%",
+          margin: "12px",
+        }}
+        onClick={() => click()}
+      >
+        Test
+      </Button>
+
+      <View>
+        <Image
+          src={
+            "https://arweave.net/62iRXUfqdXH3okfcSKfWdm9Ml39T61m4DmeAHB7yDQs"
+          }
+          style={{
+            borderRadius: "50px",
+            width: "300px",
+            margin: "12px",
+          }}
+        />
+      </View>
+
+      <View>
+        <TextField
+          style={{
+            width: "200px",
+            margin: "12px",
+          }}
+        ></TextField>
+      </View>
+      <View>
+        {/* <List
+          style={{
+            display: "column",
+            justifyContent: "center",
+            width: "30%",
+            padding: "12px",
+          }}
+        > */}
+        <ListItem>List Item 1</ListItem>
+        <ListItem>List Item 2</ListItem>
+        <ListItem>List Item 3</ListItem>
+
+        {/* </List> */}
+        <Loading />
+      </View>
     </View>
   )
 }
-
-// export function Stack1() {
-//   const nav = useNavigation()
-//   const publicKey = usePublicKey()
-//   const connection = new Connection("https://api.devnet.solana.com/")
-//   const [balance, setBalance] = useState(0)
-
-//   const getBalance = useCallback(async () => {
-//     const balance = await connection.getBalance(publicKey, "confirmed")
-//     setBalance(parseFloat((balance / LAMPORTS_PER_SOL).toFixed(2)))
-//     console.log("test")
-//   }, [publicKey, balance])
-
-//   const airdrop = useCallback(async () => {
-//     console.log("test")
-//     const signature = await connection.requestAirdrop(
-//       publicKey,
-//       2 * LAMPORTS_PER_SOL
-//     )
-//     await connection.confirmTransaction(signature, "confirmed")
-
-//     getBalance()
-//   }, [publicKey])
-
-//   useEffect(() => {
-//     if (publicKey) {
-//       console.log("useStakeAccounts : publicKey", publicKey.toString())
-//     }
-//     getBalance()
-//   }, [publicKey])
-
-//   return (
-//     <View
-//       style={{
-//         textAlign: "center",
-//         color: THEME.colors.text,
-//       }}
-//     >
-//       <Text
-//         style={{
-//           textAlign: "center",
-//           color: THEME.colors.text,
-//           fontSize: "20px",
-//           fontWeight: 400,
-//           lineHeight: "150%",
-//           margin: "12px",
-//         }}
-//       >
-//         Tab Two
-//       </Text>
-//       <Text
-//         style={{
-//           textAlign: "center",
-//           color: THEME.colors.text,
-//           fontSize: "15px",
-//           fontWeight: 100,
-//           lineHeight: "150%",
-//           margin: "12px",
-//         }}
-//       >
-//         Balance is {balance}
-//       </Text>
-//       <Button
-//         style={{
-//           textAlign: "center",
-//           color: "black",
-//           fontSize: "15px",
-//           fontWeight: 100,
-//           lineHeight: "150%",
-//           margin: "12px",
-//         }}
-//         onClick={() => airdrop()}
-//       >
-//         Airdrop
-//       </Button>
-//     </View>
-//   )
-// }
