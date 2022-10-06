@@ -40,7 +40,7 @@ export function Test3() {
     console.log("test")
     const signature = await connection.requestAirdrop(
       publicKey,
-      LAMPORTS_PER_SOL
+      2 * LAMPORTS_PER_SOL
     )
     await connection.confirmTransaction(signature, "confirmed")
 
@@ -71,7 +71,7 @@ export function Test3() {
           margin: "12px",
         }}
       >
-        Tab Two
+        Tab Three
       </Text>
       <Text
         style={{

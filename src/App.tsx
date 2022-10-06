@@ -19,6 +19,7 @@ import ReactXnft, {
 } from "react-xnft"
 import { Test } from "./Test"
 import { Test2 } from "./Test2"
+import { Test3 } from "./Test3"
 import { THEME } from "./utils/theme"
 //
 // On connection to the host environment, warm the cache.
@@ -89,7 +90,7 @@ export function App() {
         <Tab.Screen
           name="test3"
           disableLabel={true}
-          component={() => <Test2 />}
+          component={() => <Test3 />}
         />
       </Tab.Navigator>
     </View>

@@ -40,7 +40,7 @@ export function Test2() {
     console.log("test")
     const signature = await connection.requestAirdrop(
       publicKey,
-      LAMPORTS_PER_SOL
+      2 * LAMPORTS_PER_SOL
     )
     await connection.confirmTransaction(signature, "confirmed")
 
