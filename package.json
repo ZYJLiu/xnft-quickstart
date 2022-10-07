@@ -14,6 +14,8 @@
     "@coral-xyz/xnft-cli": "latest"
   },
   "dependencies": {
+    "assert": "^2.0.0",
+    "qr-scanner": "^1.4.1",
     "react": "^17.0.2",
     "react-xnft": "latest"
   }

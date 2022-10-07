@@ -23,9 +23,12 @@ import ReactXnft, {
   ListItem,
   ScrollBar,
   LocalStorage,
+  Iframe,
 } from "react-xnft"
+import { Program, Idl } from "@project-serum/anchor"
 import { THEME } from "../utils/theme"
-
+import { programClient } from "../utils"
+import * as anchor from "@project-serum/anchor"
 //
 // On connection to the host environment, warm the cache.
 //
@@ -43,16 +46,37 @@ export function Stack1() {
 }
 
 function Test() {
+  const program = programClient()
   const nav = useNavigation()
   const click = () => {
     console.log("click")
     nav.push("stack2")
-    test()
   }
 
   const test = async () => {
-    const value = await LocalStorage.get("key")
-    console.log("test", value)
+    const counter = anchor.web3.Keypair.generate()
+
+    const [movieReviewPda] = await anchor.web3.PublicKey.findProgramAddress(
+      [Buffer.from("title3"), window.xnft.publicKey.toBuffer()],
+      program.programId
+    )
+
+    const tx = await program.methods
+      .addMovieReview("title3", "description", 5)
+      .accounts({
+        // movieReview: movieReviewPda,
+        initializer: window.xnft.publicKey,
+        // systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([])
+      .transaction()
+
+    const signature = await window.xnft.send(tx)
+    console.log(signature)
+    // console.log(tx)
+    console.log("click")
+    console.log(window.xnft.publicKey.toBase58())
+    console.log(program)
   }
 
   return (
@@ -77,44 +101,19 @@ function Test() {
       >
         Test
       </Button>
-
-      <View>
-        <Image
-          src={
-            "https://arweave.net/62iRXUfqdXH3okfcSKfWdm9Ml39T61m4DmeAHB7yDQs"
-          }
-          style={{
-            borderRadius: "50px",
-            width: "300px",
-            margin: "12px",
-          }}
-        />
-      </View>
-
-      <View>
-        <TextField
-          style={{
-            width: "200px",
-            margin: "12px",
-          }}
-        ></TextField>
-      </View>
-      <View>
-        {/* <List
-          style={{
-            display: "column",
-            justifyContent: "center",
-            width: "30%",
-            padding: "12px",
-          }}
-        > */}
-        <ListItem>List Item 1</ListItem>
-        <ListItem>List Item 2</ListItem>
-        <ListItem>List Item 3</ListItem>
-
-        {/* </List> */}
-        <Loading />
-      </View>
+      <Button
+        style={{
+          textAlign: "center",
+          color: "black",
+          fontSize: "15px",
+          fontWeight: 100,
+          lineHeight: "150%",
+          margin: "12px",
+        }}
+        onClick={() => test()}
+      >
+        Send
+      </Button>
     </View>
   )
 }
