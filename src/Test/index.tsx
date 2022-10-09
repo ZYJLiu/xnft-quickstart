@@ -3,6 +3,7 @@ import ReactXnft, { Stack } from "react-xnft"
 import { Stack1 } from "./Stack1"
 import { Stack2 } from "./Stack2"
 import { Stack3 } from "./Stack3"
+import { Stack4 } from "./Stack4"
 
 ReactXnft.events.on("connect", () => {})
 
@@ -18,6 +19,8 @@ export function Test() {
             return { title: "Two" }
           case "stack3":
             return { title: "Three" }
+          case "stack4":
+            return { title: "Iframe" }
           default:
             throw new Error("unknown route")
         }
@@ -35,6 +38,10 @@ export function Test() {
       <Stack.Screen
         name="stack3"
         component={(props: any) => <Stack3 {...props} />}
+      />
+      <Stack.Screen
+        name="stack4"
+        component={(props: any) => <Stack4 {...props} />}
       />
     </Stack.Navigator>
   )

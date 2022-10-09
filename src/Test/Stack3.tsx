@@ -63,14 +63,12 @@ function Test() {
           border: "1px solid #000000",
           boxShadow: "4px 3px 0px #6100FF",
           borderRadius: "8px",
-          width: "40px",
-          height: "40px",
           fontWeight: 500,
           margin: "10px",
         }}
         onClick={() => click()}
       >
-        Test
+        Next
       </Button>
     </View>
   )

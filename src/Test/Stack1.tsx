@@ -24,7 +24,6 @@ import ReactXnft, {
   ScrollBar,
   LocalStorage,
   Iframe,
-  Header,
 } from "react-xnft"
 import { Program, Idl } from "@project-serum/anchor"
 import { THEME } from "../utils/theme"
@@ -53,6 +52,10 @@ function Test() {
   const click = () => {
     console.log("click")
     nav.push("stack2")
+  }
+  const click2 = () => {
+    console.log("click")
+    nav.push("stack4")
   }
 
   const title = "title6"
@@ -83,11 +86,6 @@ function Test() {
     console.log(program)
   }
 
-  const click2 = () => {
-    console.log("click")
-    nav.push("stack2")
-  }
-
   return (
     <View
       style={{
@@ -108,7 +106,7 @@ function Test() {
           }}
           onClick={() => click()}
         >
-          Test
+          Next
         </Button>
         {/* <Button
           style={{
@@ -122,7 +120,7 @@ function Test() {
           onClick={() => test()}
         >
           Send
-        </Button>
+        </Button> */}
         <Button
           style={{
             textAlign: "center",
@@ -134,8 +132,8 @@ function Test() {
           }}
           onClick={() => click2()}
         >
-          Reviews
-        </Button> */}
+          Iframe
+        </Button>
       </View>
       {/* <View
         style={{
@@ -145,7 +143,7 @@ function Test() {
       >
         <Iframe src="https://token-creation-frontend-rjb6uimw2-zyjliu.vercel.app/"></Iframe>
       </View> */}
-      <Test2 />
+      {/* <Test2 /> */}
     </View>
   )
 }
@@ -205,7 +203,7 @@ function Test2() {
           color: THEME.colors.text,
         }}
       >
-        <Iframe src="https://token-creation-frontend-rjb6uimw2-zyjliu.vercel.app/"></Iframe>
+        <Iframe src="https://token-creation-frontend-rjb6uimw2-zyjliu.vercel.app/" />
       </View>
     </View>
   )

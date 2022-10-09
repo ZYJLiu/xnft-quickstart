@@ -66,7 +66,7 @@ function Test() {
           }}
           onClick={() => click()}
         >
-          Test
+          Next
         </Button>
       </View>
     </View>
