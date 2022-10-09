@@ -24,6 +24,7 @@ import ReactXnft, {
   ScrollBar,
   LocalStorage,
   Iframe,
+  Header,
 } from "react-xnft"
 import { Program, Idl } from "@project-serum/anchor"
 import { THEME } from "../utils/theme"
@@ -48,21 +49,24 @@ export function Stack1() {
 function Test() {
   const program = programClient()
   const nav = useNavigation()
+
   const click = () => {
     console.log("click")
     nav.push("stack2")
   }
 
+  const title = "title6"
+
   const test = async () => {
     const counter = anchor.web3.Keypair.generate()
 
     const [movieReviewPda] = await anchor.web3.PublicKey.findProgramAddress(
-      [Buffer.from("title3"), window.xnft.publicKey.toBuffer()],
+      [Buffer.from(title), window.xnft.publicKey.toBuffer()],
       program.programId
     )
 
     const tx = await program.methods
-      .addMovieReview("title3", "description", 5)
+      .addMovieReview(title, "description", 5)
       .accounts({
         // movieReview: movieReviewPda,
         initializer: window.xnft.publicKey,
@@ -79,6 +83,11 @@ function Test() {
     console.log(program)
   }
 
+  const click2 = () => {
+    console.log("click")
+    nav.push("stack2")
+  }
+
   return (
     <View
       style={{
@@ -86,34 +95,118 @@ function Test() {
         color: THEME.colors.text,
       }}
     >
-      <Text>Stack 1</Text>
+      <View>
+        <Text>Stack 1</Text>
+        <Button
+          style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: "15px",
+            fontWeight: 100,
+            lineHeight: "150%",
+            margin: "12px",
+          }}
+          onClick={() => click()}
+        >
+          Test
+        </Button>
+        {/* <Button
+          style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: "15px",
+            fontWeight: 100,
+            lineHeight: "150%",
+            margin: "12px",
+          }}
+          onClick={() => test()}
+        >
+          Send
+        </Button>
+        <Button
+          style={{
+            textAlign: "center",
+            color: "black",
+            fontSize: "15px",
+            fontWeight: 100,
+            lineHeight: "150%",
+            margin: "12px",
+          }}
+          onClick={() => click2()}
+        >
+          Reviews
+        </Button> */}
+      </View>
+      {/* <View
+        style={{
+          textAlign: "left",
+          color: THEME.colors.text,
+        }}
+      >
+        <Iframe src="https://token-creation-frontend-rjb6uimw2-zyjliu.vercel.app/"></Iframe>
+      </View> */}
+      <Test2 />
+    </View>
+  )
+}
 
-      <Button
+function Test2() {
+  const program = programClient()
+  const [movies, setMovies] = useState<any | null>(null)
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState("")
+  const [result, setResult] = useState<any | null>(null)
+
+  useEffect(() => {
+    if (movies && search == "") {
+      const filtered = movies.slice((page - 1) * 3, page * 3)
+      console.log(filtered)
+      setResult(filtered)
+      console.log(filtered)
+    }
+  }, [page, movies, search])
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      if (program) {
+        const accounts = (await program.account.movieAccountState.all()) ?? []
+
+        const sort = [...accounts].sort((a, b) =>
+          a.account.title > b.account.title ? 1 : -1
+        )
+        setMovies(sort)
+        console.log(accounts)
+      }
+    }
+    fetchAccounts()
+  }, [])
+
+  return (
+    <View
+      style={{
+        textAlign: "center",
+        color: THEME.colors.text,
+      }}
+    >
+      {/* {movies && (
+        <View>
+          {movies.map((r) => {
+            return (
+              <View>
+                <ListItem>{r.account.title}</ListItem>
+              </View>
+            )
+          })}
+        </View>
+      )} */}
+      <View
         style={{
-          textAlign: "center",
-          color: "black",
-          fontSize: "15px",
-          fontWeight: 100,
-          lineHeight: "150%",
-          margin: "12px",
+          textAlign: "left",
+          color: THEME.colors.text,
         }}
-        onClick={() => click()}
       >
-        Test
-      </Button>
-      <Button
-        style={{
-          textAlign: "center",
-          color: "black",
-          fontSize: "15px",
-          fontWeight: 100,
-          lineHeight: "150%",
-          margin: "12px",
-        }}
-        onClick={() => test()}
-      >
-        Send
-      </Button>
+        <Iframe src="https://token-creation-frontend-rjb6uimw2-zyjliu.vercel.app/"></Iframe>
+      </View>
     </View>
   )
 }
